@@ -1,6 +1,6 @@
 # NodeMCU_Server
 
-Needs SSID and password in NodeMCU_Server.ino in order to work
+Needs SSID and password in NodeMCU_Server.ino in order to work<br>
 After starting, serial monitor will print address used to connect to the server
 
 <p align="center">
