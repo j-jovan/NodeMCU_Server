@@ -160,6 +160,19 @@ void loop() {
     value16 = LOW;
   }
 
+  //Sledeci deo koda ce ukljuciti sve pinove redno, pa ce ih iskljuciti
+  int valueRedno1 = HIGH;
+  if (request.indexOf("/REDNO1") != -1)  {
+    int repeat = 0;
+    int brojPonavljanja = 65;
+    while(repeat < brojPonavljanja){
+    rednoUkljucivanje();
+    valueRedno1 = LOW;
+    repeat++;
+    }
+  
+  }
+
 
   // Set ledPin13 according to the request
   //digitalWrite(ledPin13, value);
@@ -267,7 +280,7 @@ void loop() {
   client.println("<a href=\"/LED16=ON\"\"><button>Turn On </button></a>");
   client.println("<a href=\"/LED16=OFF\"\"><button>Turn Off </button></a><br />");
   client.println("<br>");
-
+  client.println("<a href=\"/REDNO1\"\"><button>Diode Redno 1 </button></a>");
   client.println("</html>");
 
   delay(1);
