@@ -170,13 +170,18 @@ void loop() {
     valueRedno1 = LOW;
     repeat++;
     }
-  
   }
 
-
-  // Set ledPin13 according to the request
-  //digitalWrite(ledPin13, value);
-
+  int valueRedno2 = HIGH;
+  if (request.indexOf("/REDNO2") != -1)  {
+    int repeat = 0;
+    int brojPonavljanja = 65;
+    while(repeat < brojPonavljanja){
+    rednoUkljucivanje2();
+    valueRedno1 = LOW;
+    repeat++;
+    }
+  }
   // Return the response
   client.println("HTTP/1.1 200 OK");
   client.println("Content-Type: text/html");
@@ -281,6 +286,7 @@ void loop() {
   client.println("<a href=\"/LED16=OFF\"\"><button>Turn Off </button></a><br />");
   client.println("<br>");
   client.println("<a href=\"/REDNO1\"\"><button>Diode Redno 1 </button></a>");
+  client.println("<a href=\"/REDNO2\"\"><button>Diode Redno 2 </button></a>");
   client.println("</html>");
 
   delay(1);
