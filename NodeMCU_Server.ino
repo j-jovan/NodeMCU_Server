@@ -182,6 +182,18 @@ void loop() {
     repeat++;
     }
   }
+
+  int valueRedno3 = HIGH;
+  if (request.indexOf("/REDNO3") != -1)  {
+    int repeat = 0;
+    int brojPonavljanja = 65;
+    while(repeat < brojPonavljanja){
+    rednoUkljucivanje3();
+    valueRedno3 = LOW;
+    repeat++;
+    }
+  }
+  
   // Return the response
   client.println("HTTP/1.1 200 OK");
   client.println("Content-Type: text/html");
@@ -287,6 +299,7 @@ void loop() {
   client.println("<br>");
   client.println("<a href=\"/REDNO1\"\"><button>Diode Redno 1 </button></a>");
   client.println("<a href=\"/REDNO2\"\"><button>Diode Redno 2 </button></a>");
+  client.println("<a href=\"/REDNO3\"\"><button>Diode Redno 3 </button></a>");
   client.println("</html>");
 
   delay(1);

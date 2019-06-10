@@ -1,112 +1,62 @@
+int ledPins[] = {13, 12, 14, 2, 0, 4, 5, 16}; //Array koji sadrzi sve pinove.
+int pinCount = 8; // Broj item-a u nizu ledPins[], jer sizeof() ne radi
+int timer = 100; // Timer svega
 
+//Ukljuci pinove redno, pa iskljuci pinove redno
 void rednoUkljucivanje() {
-  digitalWrite(ledPin13, HIGH);
-  delay(100);
-  digitalWrite(ledPin12, HIGH);
-  delay(100);
-  digitalWrite(ledPin14, HIGH);
-  delay(100);
-  digitalWrite(ledPin2, HIGH);
-  delay(100);
-  digitalWrite(ledPin0, HIGH);
-  delay(100);
-  digitalWrite(ledPin4, HIGH);
-  delay(100);
-  digitalWrite(ledPin5, HIGH);
-  delay(100);
-  digitalWrite(ledPin16, HIGH);
-  delay(100);
-  digitalWrite(ledPin13, LOW);
-  delay(100);
-  digitalWrite(ledPin12, LOW);
-  delay(100);
-  digitalWrite(ledPin14, LOW);
-  delay(100);
-  digitalWrite(ledPin2, LOW);
-  delay(100);
-  digitalWrite(ledPin0, LOW);
-  delay(100);
-  digitalWrite(ledPin4, LOW);
-  delay(100);
-  digitalWrite(ledPin5, LOW);
-  delay(100);
-  digitalWrite(ledPin16, LOW);
-  delay(100);
+  //Inicijalizacija pinova iz ledPins[]
+  for (int thisPin = 0; thisPin < pinCount; thisPin++) {
+    pinMode(ledPins[thisPin], OUTPUT);
+  }
+  for (int thisPin = 0; thisPin < pinCount; thisPin++) {
+    digitalWrite(ledPins[thisPin], HIGH);
+    delay(timer);
+  }
+  for (int thisPin = 8; thisPin > 0; thisPin--) {
+    digitalWrite(ledPins[thisPin], LOW);
+    delay(timer);
+  }
 }
-
-
+//Ukljuci pinove cik-cak (prvi, poslednji), iskljuci redno
 void rednoUkljucivanje2() {
-  digitalWrite(ledPin13, HIGH);
-  delay(300);
-  digitalWrite(ledPin16, HIGH);
-  delay(300);
-  digitalWrite(ledPin12, HIGH);
-  delay(300);
-  digitalWrite(ledPin5, HIGH);
-  delay(300);
-  digitalWrite(ledPin14, HIGH);
-  delay(300);
-  digitalWrite(ledPin4, HIGH);
-  delay(300);
-  digitalWrite(ledPin2, HIGH);
-  delay(300);
-  digitalWrite(ledPin0, HIGH);
-  delay(300);
-
-  digitalWrite(ledPin13, LOW);
-  delay(300);
-  digitalWrite(ledPin12, LOW);
-  delay(300);
-  digitalWrite(ledPin14, LOW);
-  delay(300);
-  digitalWrite(ledPin2, LOW);
-  delay(300);
-  digitalWrite(ledPin0, LOW);
-  delay(300);
-  digitalWrite(ledPin4, LOW);
-  delay(300);
-  digitalWrite(ledPin5, LOW);
-  delay(300);
-  digitalWrite(ledPin16, LOW);
-  delay(300);
-
-  digitalWrite(ledPin13, HIGH);
-  delay(300);
-  digitalWrite(ledPin16, HIGH);
-  delay(300);
-  digitalWrite(ledPin12, HIGH);
-  delay(300);
-  digitalWrite(ledPin5, HIGH);
-  delay(300);
-  digitalWrite(ledPin14, HIGH);
-  delay(300);
-  digitalWrite(ledPin4, HIGH);
-  delay(300);
-  digitalWrite(ledPin2, HIGH);
-  delay(300);
-  digitalWrite(ledPin0, HIGH);
-  delay(300);
-  digitalWrite(ledPin16, LOW);
-  delay(300);
-  digitalWrite(ledPin5, LOW);
-  delay(300);
-  digitalWrite(ledPin4, LOW);
-  delay(300);
-  digitalWrite(ledPin0, LOW);
-  delay(300);
-  digitalWrite(ledPin2, LOW);
-  delay(300);
-  digitalWrite(ledPin14, LOW);
-  delay(300);
-  digitalWrite(ledPin12, LOW);
-  delay(300); 
-  digitalWrite(ledPin13, LOW);
-  delay(300);
-
-
-
-
-
-
-
+  for (int flipFlop = 1; flipFlop <= 2; flipFlop++) {
+    int minNum = 0;
+    int maxNum = 7;
+    for (int i = 0; i < 8; i++) {
+      digitalWrite(ledPins[minNum], HIGH);
+      delay(timer);
+      digitalWrite(ledPins[maxNum], HIGH);
+      delay(timer);
+      minNum++;
+      maxNum--;
+    }
+    if (flipFlop == 1) {
+      for (int thisPin = 8; thisPin >= 0; thisPin--) {
+        digitalWrite(ledPins[thisPin], LOW);
+        delay(timer);
+      }
+    }
+    if (flipFlop == 2) {
+      for (int thisPin = 0; thisPin <= 8; thisPin++) {
+        digitalWrite(ledPins[thisPin], LOW);
+        delay(timer);
+      }
+    }
+  }
+}
+//Ukljuci, iskljuci jedan po jedan
+void rednoUkljucivanje3() {
+  for (int thisPin = 0; thisPin < pinCount; thisPin++) {
+    pinMode(ledPins[thisPin], OUTPUT);
+  }
+  for (int thisPin = 0; thisPin < pinCount; thisPin++) {
+    digitalWrite(ledPins[thisPin], HIGH);
+    delay(timer);
+    digitalWrite(ledPins[thisPin], LOW);
+  }
+  for (int thisPin = 8; thisPin > 0; thisPin--) {
+    digitalWrite(ledPins[thisPin], HIGH);
+    delay(timer);
+    digitalWrite(ledPins[thisPin], LOW);
+  }
 }
