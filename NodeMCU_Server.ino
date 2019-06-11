@@ -11,30 +11,20 @@ int ledPin0 = 0;
 int ledPin4 = 4;
 int ledPin5 = 5;
 int ledPin16 = 16;
+
 WiFiServer server(80);
 
 void setup() {
   Serial.begin(115200);
   delay(10);
 
-  pinMode(ledPin13, OUTPUT);
-  digitalWrite(ledPin13, LOW);
-  pinMode(ledPin12, OUTPUT);
-  digitalWrite(ledPin12, LOW);
-  pinMode(ledPin14, OUTPUT);
-  digitalWrite(ledPin14, LOW);
-  pinMode(ledPin2, OUTPUT);
-  digitalWrite(ledPin2, LOW);
-  pinMode(ledPin0, OUTPUT);
-  digitalWrite(ledPin0, LOW);
-  pinMode(ledPin4, OUTPUT);
-  digitalWrite(ledPin4, LOW);
-  pinMode(ledPin5, OUTPUT);
-  digitalWrite(ledPin5, LOW);
-  pinMode(ledPin16, OUTPUT);
-  digitalWrite(ledPin16, LOW);
+  int ledPins[] = {13, 12, 14, 2, 0, 4, 5, 16}; //Array koji sadrzi sve pinove.
+  int pinCount = 8; // Broj item-a u nizu ledPins[], jer sizeof() ne radi
+  for (int thisPin = 0; thisPin < pinCount; thisPin++) {
+    pinMode(ledPins[thisPin], OUTPUT);
+    digitalWrite(ledPins[thisPin], LOW);
+  }
 
-  // Connect to WiFi network
   Serial.println();
   Serial.println();
   Serial.print("Connecting to ");
@@ -49,11 +39,10 @@ void setup() {
   Serial.println("");
   Serial.println("WiFi connected");
 
-  // Start the server
+  // server.begin podize server
   server.begin();
   Serial.println("Server started");
 
-  // Print the IP address
   Serial.print("Use this URL to connect: ");
   Serial.print("http://");
   Serial.print(WiFi.localIP());
@@ -62,24 +51,24 @@ void setup() {
 }
 
 void loop() {
-  // Check if a client has connected
+  // Provera da li se klijent konektovao
   WiFiClient client = server.available();
   if (!client) {
     return;
   }
 
-  // Wait until the client sends some data
+  // Cekaj dok klijent ne posalje zahtev
   Serial.println("new client");
   while (!client.available()) {
     delay(1);
   }
 
-  // Read the first line of the request
+  // Procitaj zahtev
   String request = client.readStringUntil('\r');
   Serial.println(request);
   client.flush();
 
-  // Match the request
+  // Uporedi zahteb
 
   int value13 = LOW;
   if (request.indexOf("/LED13=ON") != -1)  {
@@ -90,7 +79,6 @@ void loop() {
     digitalWrite(ledPin13, LOW);
     value13 = LOW;
   }
-
   int value12 = LOW;
   if (request.indexOf("/LED12=ON") != -1)  {
     digitalWrite(ledPin12, HIGH);
@@ -109,7 +97,6 @@ void loop() {
     digitalWrite(ledPin14, LOW);
     value14 = LOW;
   }
-
   int value2 = LOW;
   if (request.indexOf("/LED2=ON") != -1)  {
     digitalWrite(ledPin2, HIGH);
@@ -119,7 +106,6 @@ void loop() {
     digitalWrite(ledPin2, LOW);
     value2 = LOW;
   }
-
   int value0 = LOW;
   if (request.indexOf("/LED0=ON") != -1)  {
     digitalWrite(ledPin0, HIGH);
@@ -149,7 +135,6 @@ void loop() {
     digitalWrite(ledPin5, LOW);
     value5 = LOW;
   }
-
   int value16 = LOW;
   if (request.indexOf("/LED16=ON") != -1)  {
     digitalWrite(ledPin16, HIGH);
@@ -165,10 +150,10 @@ void loop() {
   if (request.indexOf("/REDNO1") != -1)  {
     int repeat = 0;
     int brojPonavljanja = 65;
-    while(repeat < brojPonavljanja){
-    rednoUkljucivanje();
-    valueRedno1 = LOW;
-    repeat++;
+    while (repeat < brojPonavljanja) {
+      rednoUkljucivanje();
+      valueRedno1 = LOW;
+      repeat++;
     }
   }
 
@@ -176,10 +161,10 @@ void loop() {
   if (request.indexOf("/REDNO2") != -1)  {
     int repeat = 0;
     int brojPonavljanja = 65;
-    while(repeat < brojPonavljanja){
-    rednoUkljucivanje2();
-    valueRedno1 = LOW;
-    repeat++;
+    while (repeat < brojPonavljanja) {
+      rednoUkljucivanje2();
+      valueRedno1 = LOW;
+      repeat++;
     }
   }
 
@@ -187,13 +172,13 @@ void loop() {
   if (request.indexOf("/REDNO3") != -1)  {
     int repeat = 0;
     int brojPonavljanja = 65;
-    while(repeat < brojPonavljanja){
-    rednoUkljucivanje3();
-    valueRedno3 = LOW;
-    repeat++;
+    while (repeat < brojPonavljanja) {
+      rednoUkljucivanje3();
+      valueRedno3 = LOW;
+      repeat++;
     }
   }
-  
+
   // Return the response
   client.println("HTTP/1.1 200 OK");
   client.println("Content-Type: text/html");
